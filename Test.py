@@ -133,7 +133,7 @@ lt.addNode(ln5, ln4)
 
 lt.isotonicRegression()
 print("Test-LTree: \n" + str(lt.block_class))
-print("valid: " + str(t.block_class.valid(lset)))
+print("valid: " + str(lt.block_class.valid(lset)))
 
 ########################################################################################################################
 ll = Line()
