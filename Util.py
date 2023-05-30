@@ -2,7 +2,7 @@
 class Node:
     def __init__(self, tag, value, weight=1):
         self.tag = tag  # String tag = x1
-        self.value = value  # float value
+        self.value = value  # double value
         self.weight = weight  # double weight
 
         self.tnode = None
@@ -37,7 +37,7 @@ class Block:
         result += "}"
         return result
 
-    def absort(self, other):  # merge two blocks into one
+    def absorb(self, other):  # merge two blocks into one
         if not isinstance(other, Block):
             raise Exception("invalid input, expect a Block")
         else:
@@ -99,7 +99,7 @@ class BlockClass:
         return self.getBlockByNode(target_node)
 
     def merge(self, to: Block, b: Block):
-        to.absort(b)
+        to.absorb(b)
         self.blocks.remove(b)
 
 
