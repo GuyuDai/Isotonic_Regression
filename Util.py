@@ -10,7 +10,7 @@ class Node:
         self.lnode = None
 
     def __str__(self):
-        return f"{self.tag}:v={self.value},w={self.weight}"
+        return f"{self.tag}:(v={self.value},w={self.weight})"
 
     def toSpecific(self):
         if self.tnode is not None:
@@ -31,9 +31,9 @@ class Block:
             self.key = self.av()
 
     def __str__(self):
-        result = f'B(Av={self.key})' + "{\n"
+        result = f'B(Av={self.key})' + "{"
         for node in self.nodes:
-            result = result + str(node) + ";\n"
+            result = result + str(node) + ", "
         result += "}"
         return result
 
