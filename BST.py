@@ -44,19 +44,28 @@ class BST:
     def isotonicRegression(self):
         if self.root is None:
             return
-        self.block_class.blocks = self.isotonicRegressionHelper(solution=set(), unsolved={self.root})
+        self.block_class.blocks = self.isotonicRegressionHelper(solution=[], unsolved=[self.root])
 
-    def isotonicRegressionHelper(self, solution: set, unsolved: set):  # Block{} solution, BSTNode{} unsolved
+    def isotonicRegressionHelper(self, solution: [], unsolved: []):  # Block{} solution, BSTNode{} unsolved
         rights = set()
         temp = unsolved.pop()
         while temp is not None:
             rights.add(temp.node)
             if temp.left is not None:
-                unsolved.add(temp.left)
+                unsolved.append(temp.left)
             temp = temp.right
 
-        solution.add(Block(*rights))
+        temp_block = Block(*rights)
+        if len(solution) > 0:
+            parent_block = solution[-1]
+            if parent_block.key < temp_block.key:
+                parent_block.absorb(temp_block)
+            else:
+                solution.append(temp_block)
+        else:
+            solution.append(temp_block)
+
         if len(unsolved) == 0:
-            return solution
+            return set(solution)
         else:
             return self.isotonicRegressionHelper(solution, unsolved)

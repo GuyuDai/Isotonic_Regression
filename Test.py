@@ -34,7 +34,7 @@ def generator(target, num: int):
 
 
 ########################################################################################################################
-
+'''
 ln1 = Node("ln1", 6)
 ln2 = Node("ln2", 0)
 ln3 = Node("ln3", 2)
@@ -53,9 +53,9 @@ lset = {ln1, ln2, ln3, ln4, ln5}
 l.isotonicRegression()
 print("Test-Line: \n" + str(l.block_class))
 print("valid: " + str(l.block_class.valid(lset)))
-
-########################################################################################################################
 '''
+########################################################################################################################
+
 bn1 = Node("bn1", 15)
 bn2 = Node("bn2", 8)
 bn3 = Node("bn3", 23)
@@ -69,7 +69,7 @@ bn10 = Node("bn10", 10)
 bn11 = Node("bn11", 13)
 bn12 = Node("bn12", 18)
 bn13 = Node("bn13", 21)
-bn14 = Node("bn14", 24)
+bn14 = Node("bn14", 28)
 bn15 = Node("bn15", 30)
 
 bst = BST()
@@ -94,7 +94,7 @@ bstset = {bn1, bn2, bn3, bn4, bn5, bn6, bn7, bn8, bn9, bn10, bn11, bn12, bn13, b
 bst.isotonicRegression()
 print("Test-BST: \n" + str(bst.block_class))
 print("valid: " + str(bst.block_class.valid(bstset)))
-'''
+
 ########################################################################################################################
 '''
 tn1 = Node("x1", 7)
