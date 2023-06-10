@@ -64,6 +64,7 @@ class Line:
             return None
         else:
             return self.block_class.getBlockByNode(uniq_child)
+            # return uniq_child.block
 
     def getParent(self, block: Block, temp: LineNode = None):  # usage: line.getParent(block)
         if temp is None:
@@ -72,6 +73,7 @@ class Line:
             return None
         elif (temp.nex.node in block.nodes) and not (temp in block.nodes):
             return self.block_class.getBlockByNode(temp.node)
+            # return temp.node.block
         else:
             return self.getParent(block, temp.nex)
 
@@ -79,6 +81,7 @@ class Line:
         done = False
         without_first = self.block_class.blocks.copy()  # Block{}
         without_first.remove(self.block_class.getBlockByNode(self.first.node))  # Block{}
+        # without_first.remove(self.first.node.block)
         if len(without_first) == 0:
             return
         b = without_first.pop()

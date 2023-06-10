@@ -5,6 +5,8 @@ class Node:
         self.value = value  # double value
         self.weight = weight  # double weight
 
+        # self.block = None
+
         self.tnode = None
         self.bstnode = None
         self.lnode = None
@@ -29,6 +31,8 @@ class Block:
         else:
             self.nodes = set(nodes)  # Nodes{} nodes
             self.key = self.av()
+            # for node in nodes:
+            #     node.block = self
 
     def __str__(self):
         result = f'B(Av={self.key})' + "{"
@@ -43,6 +47,8 @@ class Block:
         else:
             self.nodes.update(other.nodes)
             self.key = self.av()
+            # for node in self.nodes:
+            #     node.block = self
 
     def av(self):  # weighted average
         w = 0
