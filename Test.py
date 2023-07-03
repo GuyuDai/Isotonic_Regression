@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 
 from Tree import *
 from BST import *
@@ -15,9 +16,11 @@ def generator(target, num: int):
     result = []
     for i in range(1, num + 1):
         result.append(Node("node" + str(i), i + int(random.gauss(0, 1))))
+        # print(len(result))  # for test
     if isinstance(target, Line) or isinstance(target, BST):
         for node in result:
             target.addNode(node)
+            # print(str(target.block_class))  # for test
     if isinstance(target, Tree):
         marked = set()
         for node in result:
@@ -27,6 +30,7 @@ def generator(target, num: int):
                 parent = random.sample(marked, 1)[0]
                 target.addNode(node, parent)
             marked.add(node)
+            # print(node.tag, " added")  # for test
     if not (isinstance(target, Tree) or isinstance(target, BST) or isinstance(target, Line)):
         raise Exception("wrong input data type")
 
@@ -55,7 +59,7 @@ print("Test-Line: \n" + str(l.block_class))
 print("valid: " + str(l.block_class.valid(lset)))
 '''
 ########################################################################################################################
-
+'''
 bn1 = Node("bn1", 15)
 bn2 = Node("bn2", 8)
 bn3 = Node("bn3", 23)
@@ -94,7 +98,7 @@ bstset = {bn1, bn2, bn3, bn4, bn5, bn6, bn7, bn8, bn9, bn10, bn11, bn12, bn13, b
 bst.isotonicRegression()
 print("Test-BST: \n" + str(bst.block_class))
 print("valid: " + str(bst.block_class.valid(bstset)))
-
+'''
 ########################################################################################################################
 '''
 tn1 = Node("x1", 7)
@@ -152,14 +156,15 @@ print("valid: " + str(lt.block_class.valid(lset)))
 ########################################################################################################################
 '''
 bl = Line()
-blset = generator(bl, 1)
+blset = generator(bl, 10)
 bl.isotonicRegression()
 print("BigData-Test: \n" + str(bl.block_class))
 print("valid: " + str(bl.block_class.valid(blset)))
 '''
 ########################################################################################################################
-'''
+
 ll = Line()
+'''
 lln1 = Node("x1", int(random.random()*10))
 lln2 = Node("x2", int(random.random()*10))
 lln3 = Node("x3", int(random.random()*10))
@@ -170,6 +175,7 @@ lln7 = Node("x7", int(random.random()*10))
 lln8 = Node("x8", int(random.random()*10))
 lln9 = Node("x9", int(random.random()*10))
 lln10 = Node("x10", int(random.random()*10))
+
 ll.addNode(lln1)
 ll.addNode(lln2)
 ll.addNode(lln3)
@@ -186,19 +192,23 @@ start = time.time()
 ll.isotonicRegression()
 
 mid1 = time.time()
+'''
 
-n = 10
+sys.setrecursionlimit(20000)
+n = 2900
 x = np.arange(n)
 rs = check_random_state(0)
 y = rs.randint(-50, 50, size=(n,)) + 50.0 * np.log1p(np.arange(n))
+for v in np.nditer(y):
+    ll.addNode(Node("n", v))
+
+start = time.time()
+ll.isotonicRegression()
+mid1 = time.time()
 ir = IsotonicRegression(out_of_bounds="clip")
-
 mid2 = time.time()
-
 y_ = ir.fit_transform(x, y)
-
 end = time.time()
 
 print("Running time of IRL: ", mid1 - start)
 print("Running time of sklearn: ", end - mid2)
-'''

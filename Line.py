@@ -4,6 +4,7 @@ from Util import *
 class LineNode:
     def __init__(self, node: Node):
         self.node = node
+        self.pre = None
         self.nex = None
         node.lnode = self
 
@@ -31,6 +32,7 @@ class Line:
     def addNodeHelper(self, pre: LineNode, target: LineNode):
         if pre.nex is None:
             pre.nex = target
+            target.pre = pre
         else:
             self.addNodeHelper(pre.nex, target)
 
@@ -50,7 +52,8 @@ class Line:
         else:
             return self.getLineNodeByNodeHelper(lnode.nex, target)
 
-    def getSon(self, block: Block):  # either None or only one block
+    '''
+    def getSon(self, block: Block):
         children_of_block = set()
         for node in block.nodes:
             lnode = node.toSpecific()
@@ -65,7 +68,24 @@ class Line:
         else:
             return self.block_class.getBlockByNode(uniq_child)
             # return uniq_child.block
+    '''
 
+    def getSon(self, block: Block):  # either None or only one block
+        p = next(iter(block.nodes)).toSpecific()
+        while True:
+            if p.nex is None:
+                return None
+            if p.nex.node in block.nodes:
+                p = p.nex
+            else:
+                p = p.nex
+                break
+        if p is None:
+            return None
+        else:
+            return self.block_class.getBlockByNode(p.node)
+
+    '''
     def getParent(self, block: Block, temp: LineNode = None):  # usage: line.getParent(block)
         if temp is None:
             temp = self.first
@@ -76,6 +96,22 @@ class Line:
             # return temp.node.block
         else:
             return self.getParent(block, temp.nex)
+    '''
+
+    def getParent(self, block: Block):
+        p = next(iter(block.nodes)).toSpecific()
+        while True:
+            if p.pre is None:
+                return None
+            if p.pre.node in block.nodes:
+                p = p.pre
+            else:
+                p = p.pre
+                break
+        if p is None:
+            return None
+        else:
+            return self.block_class.getBlockByNode(p.node)
 
     def isotonicRegression(self):
         done = False
@@ -87,9 +123,11 @@ class Line:
         b = without_first.pop()
         del without_first
         while not done:
+            # print("b: ", str(b))
             s = self.getSon(b)
+            # print("s: ", str(s))
             p = self.getParent(b)
-            # print(b, s, p)  # for testing
+            # print("p: ", str(p))
             if (s is not None) and (b.key < s.key):
                 self.block_class.merge(to=b, b=s)
             elif (p is not None) and (b.key > p.key):
